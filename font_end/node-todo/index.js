@@ -1,25 +1,17 @@
-const {Command} =require('commander')
+const {db}=require('./db')
+module.exports.add = async (title)=> {
+    const list=await db.read()
+    if(title){
+        const task={
+            title:title,
+            done:false
+        }
+        list.push(task)
+    }
+    const message=await db.write(JSON.stringify(list)+'\n');
+    if(message){
+        console.log(message)
+    }
 
-const program = new Command();
-program.version('0.0.1');
+}
 
-program
-    .option('-d, --add', 'add a task')
-program
-    .command('add')
-    .description('add a task')
-    .action((...args) => {
-        const words=args.slice(-1,args.length)[0].join(' ');
-        console.log(words)
-    });
-
-program
-    .command('clear')
-    .description('clear all tasks')
-    .action(() => {
-        console.log('all cleared');
-    });
-
-
-program.parse(process.argv)
-console.log('hi')
