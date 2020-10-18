@@ -16,6 +16,7 @@ const db = {
                 try {
 
                     list = JSON.parse(content.toString())
+
                 } catch (e) {
                     list = [];
 
